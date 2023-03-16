@@ -8,8 +8,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.mariambu.flowernotebook.DB.DatabaseHelper;
 import com.mariambu.flowernotebook.R;
@@ -18,6 +21,9 @@ public class EditNomenclatureActivity extends AppCompatActivity {
 
     EditText name_input, category_input,price_input;
     Button save_btn, delete_btn;
+
+    Spinner category_spinner;
+    String[] categories ={"Цветы","Открытки","Игрушки"};
 
     DatabaseHelper sqlHelper;
     SQLiteDatabase db;
@@ -31,6 +37,24 @@ public class EditNomenclatureActivity extends AppCompatActivity {
         name_input = findViewById(R.id.name);
         category_input = findViewById(R.id.category);
         price_input = findViewById(R.id.price);
+
+        category_spinner = findViewById(R.id.spinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, categories);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        category_spinner.setAdapter(adapter);
+        AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = (String)parent.getItemAtPosition(position);
+                category_input.setText(item);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        };
+        category_spinner.setOnItemSelectedListener(onItemSelectedListener);
 
         save_btn = findViewById(R.id.saveButton);
         delete_btn = findViewById(R.id.deleteButton);

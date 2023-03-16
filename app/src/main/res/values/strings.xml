@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">FlowerNotebook</string>
+    ///////////мои строки///////////////
+    /*кнопки таблиц*/
+    <string name="btn_nomenclature">Номенклатура</string>
+    <string name="btn_sales">Продажи</string>
+    <string name="btn_clients">Клиенты</string>
+    <string name="btn_providers">Поставщики</string>
+    <string name="btn_employees">Сотрудники</string>
+    ///////////мои строки///////////////
+</resources>

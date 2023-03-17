@@ -44,8 +44,8 @@ public class NomenclatureActivity extends AppCompatActivity {
         super.onResume();
         db = databaseHelper.getReadableDatabase();
         userCursor = db.rawQuery("Select * from "+DatabaseHelper.TABLE_NOMENCLATURE, null);
-        String[] headers = new String[] {DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_CATEGORY, DatabaseHelper.COLUMN_PRICE};
-        userAdapter = new SimpleCursorAdapter(this,R.layout.item,userCursor,headers, new int[]{R.id.name, R.id.category, R.id.price}, 0);
+        String[] headers = new String[] {DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_CATEGORY, DatabaseHelper.COLUMN_PRICE, DatabaseHelper.COLUMN_COUNT};
+        userAdapter = new SimpleCursorAdapter(this,R.layout.item,userCursor,headers, new int[]{R.id.name, R.id.category, R.id.price, R.id.count}, 0);
 
         userList.setAdapter(userAdapter);
     }

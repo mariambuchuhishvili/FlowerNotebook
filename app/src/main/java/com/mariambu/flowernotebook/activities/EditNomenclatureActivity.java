@@ -19,7 +19,7 @@ import com.mariambu.flowernotebook.R;
 
 public class EditNomenclatureActivity extends AppCompatActivity {
 
-    EditText name_input, category_input,price_input;
+    EditText name_input, category_input,price_input, count_input;
     Button save_btn, delete_btn;
 
     Spinner category_spinner;
@@ -37,6 +37,7 @@ public class EditNomenclatureActivity extends AppCompatActivity {
         name_input = findViewById(R.id.name);
         category_input = findViewById(R.id.category);
         price_input = findViewById(R.id.price);
+        count_input = findViewById(R.id.count);
 
         category_spinner = findViewById(R.id.spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, categories);
@@ -72,7 +73,9 @@ public class EditNomenclatureActivity extends AppCompatActivity {
             userCursor.moveToFirst();
             name_input.setText(userCursor.getString(1));
             category_input.setText(userCursor.getString(2)); //??????????
+            //category_spinner.setSelection((int) userId);
             price_input.setText(String.valueOf(userCursor.getInt(3)));
+            count_input.setText(String.valueOf(userCursor.getInt(4)));
             userCursor.close();
         } else {
             // скрываем кнопку удаления
@@ -83,8 +86,9 @@ public class EditNomenclatureActivity extends AppCompatActivity {
     public void save(View view) {
         DatabaseHelper myDB = new DatabaseHelper(EditNomenclatureActivity.this);
         myDB.addNomenclature(name_input.getText().toString().trim(),
-                category_input.getText().toString().trim(),
-                Integer.valueOf(price_input.getText().toString().trim()));
+                             category_input.getText().toString().trim(),
+                             Integer.valueOf(price_input.getText().toString().trim()),
+                             Integer.valueOf(count_input.getText().toString().trim()));
         goHome();
     }
     public void delete(View view) {

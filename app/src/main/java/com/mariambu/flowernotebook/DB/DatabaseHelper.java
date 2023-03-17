@@ -10,13 +10,14 @@ import androidx.annotation.Nullable;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "FlowerDB.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public static final String TABLE_NOMENCLATURE = "nomenclature";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_CATEGORY = "category";
     public static final String COLUMN_PRICE = "price";
+    public static final String COLUMN_COUNT = "count";
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -26,7 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + TABLE_NOMENCLATURE +" ( " + COLUMN_ID
                 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_NAME
                 + " TEXT, "+ COLUMN_CATEGORY + " TEXT, "
-                + COLUMN_PRICE + " INTEGER);");
+                + COLUMN_PRICE + " INTEGER, " + COLUMN_COUNT + " INTEGER);");
     }
 
     @Override
@@ -34,12 +35,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOMENCLATURE);
         onCreate(db);
     }
-    public void addNomenclature(String name, String category, int prices){
+    public void addNomenclature(String name, String category, int prices, int count){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_NAME,name);
         cv.put(COLUMN_CATEGORY,category);
         cv.put(COLUMN_PRICE,prices);
+        cv.put(COLUMN_COUNT,count);
         db.insert(TABLE_NOMENCLATURE, null,cv);
     }
     ////////////////разобраться////////////////////////

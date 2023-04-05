@@ -20,4 +20,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,NomenclatureActivity.class);
         startActivity(intent);
     }
+    public void openSalesActivity(View view){
+        Intent intent = new Intent(this,SalesActivity.class);
+        startActivity(intent);
+    }
 }

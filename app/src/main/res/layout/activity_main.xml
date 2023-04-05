@@ -24,6 +24,7 @@
 
         <Button
             android:id="@+id/button2"
+            android:onClick="openSalesActivity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/btn_sales"

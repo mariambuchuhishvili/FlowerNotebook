@@ -24,4 +24,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,SalesActivity.class);
         startActivity(intent);
     }
+    public void openProviderActivity(View view){
+        Intent intent = new Intent(this,ProviderActivity.class);
+        startActivity(intent);
+    }
 }

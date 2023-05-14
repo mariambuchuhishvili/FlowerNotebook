@@ -28,4 +28,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,ProviderActivity.class);
         startActivity(intent);
     }
+    public void openEmployeeActivity(View view){
+        Intent intent = new Intent(this,EmployeeActivity.class);
+        startActivity(intent);
+    }
 }

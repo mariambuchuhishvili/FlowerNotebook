@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/wallpaper"
+    tools:context=".activities.EditEmployeeActivity">
+    <EditText
+        android:id="@+id/fio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Введите Ф.И.О сотрудника"
+        android:minHeight="48dp"
+        android:textSize="18sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+    <EditText
+        android:id="@+id/profession"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Введите должность"
+        android:minHeight="48dp"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/fio"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+    <EditText
+        android:id="@+id/bday"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Введите день и год рождения"
+        android:minHeight="48dp"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/profession"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+    <EditText
+        android:id="@+id/address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Введите адрес проживания"
+        android:minHeight="48dp"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/bday"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+    <EditText
+        android:id="@+id/contacts"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Введите номер телефона"
+        android:minHeight="48dp"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/address"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Сохранить"
+        android:onClick="save"
+        app:layout_constraintHorizontal_weight="1"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/contacts"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/deleteButton"
+        />
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Удалить"
+        android:onClick="delete"
+        app:layout_constraintHorizontal_weight="1"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/contacts"
+        app:layout_constraintLeft_toRightOf="@+id/saveButton"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

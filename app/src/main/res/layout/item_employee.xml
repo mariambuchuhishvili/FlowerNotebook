@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/lbl_fio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Ф.И.О."
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    <TextView
+        android:id="@+id/fio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="ФИО"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/lbl_fio" />
+
+    <TextView
+        android:id="@+id/lbl_profession"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Должность"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lbl_fio" />
+    <TextView
+        android:id="@+id/profession"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Должность"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/fio"
+        app:layout_constraintLeft_toRightOf="@id/lbl_profession" />
+    <TextView
+        android:id="@+id/lbl_bday"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="День рожждения"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lbl_profession" />
+    <TextView
+        android:id="@+id/bday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="День рождения"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/profession"
+        app:layout_constraintLeft_toRightOf="@id/lbl_bday" />
+    <TextView
+        android:id="@+id/lbl_address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Адрес"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lbl_bday" />
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Адрес"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/bday"
+        app:layout_constraintLeft_toRightOf="@id/lbl_address" />
+    <TextView
+        android:id="@+id/lbl_contacts"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Номер телефона"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lbl_address" />
+    <TextView
+        android:id="@+id/contacts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Номер телефона"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/address"
+        app:layout_constraintLeft_toRightOf="@id/lbl_contacts" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

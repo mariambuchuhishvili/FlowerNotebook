@@ -26,7 +26,7 @@ public class EditEmployeeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_employee);
         fio_input = findViewById(R.id.fio);
         profession_input = findViewById(R.id.profession);
-        bday_input = findViewById(R.id.profession);
+        bday_input = findViewById(R.id.bday);
         address_input = findViewById(R.id.address);
         contacts_input = findViewById(R.id.contacts);
         save_btn = findViewById(R.id.saveButton);

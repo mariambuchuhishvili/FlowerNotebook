@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "FlowerDB.db";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
 
     //Номенклатура//
     public static final String TABLE_NOMENCLATURE = "nomenclature"; //таблица номенклатуры
@@ -24,6 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_SALES = "sales"; //таблица продажи
     public static final String COLUMN_SALES_COUNT = "sales_count"; //количество проданного товара
     public static final String COLUMN_SUM = "sum";//сумма в типа чеке
+    public static final String COLUMN_TIME = "time";//время продажи
 
     //Сотрудники//
     public static final String TABLE_EMPLOYEE = "employee"; //таблица сотрудники
@@ -51,7 +52,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
        //таблица продажи//
         db.execSQL("CREATE TABLE " + TABLE_SALES +" ( " + COLUMN_ID
                 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_NAME
-                + " TEXT, "+ COLUMN_PRICE + " INTEGER, " + COLUMN_SALES_COUNT + " INTEGER, " + COLUMN_SUM + " INTEGER);");
+                + " TEXT, "+ COLUMN_PRICE + " INTEGER, " + COLUMN_SALES_COUNT + " INTEGER, " + COLUMN_SUM + " INTEGER, " + COLUMN_TIME+" TEXT);");
         //таблица сотрудники//
         db.execSQL("CREATE TABLE " +TABLE_EMPLOYEE+ " ( " + COLUMN_ID
                 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_EMPLOYEE_NAME
@@ -83,13 +84,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_NOMENCLATURE, null,cv);
     }
     //добавление/сохранение в таблице продажи
-    public void addSales(String name, int prices, int sales_count, int sum){
+    public void addSales(String name, int prices, int sales_count, int sum, String time){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_NAME,name);
         cv.put(COLUMN_PRICE,prices);
         cv.put(COLUMN_SALES_COUNT,sales_count);
         cv.put(COLUMN_SUM,sum);
+        cv.put(COLUMN_TIME,time);
         db.insert(TABLE_SALES, null,cv);
     }
     //добавление/сохранение в таблице сотрудники

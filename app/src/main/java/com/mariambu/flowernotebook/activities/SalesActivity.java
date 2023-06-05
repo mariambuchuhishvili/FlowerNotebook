@@ -42,8 +42,8 @@ public class SalesActivity extends AppCompatActivity {
         super.onResume();
         db = databaseHelper.getReadableDatabase();
         userCursor = db.rawQuery("Select * from "+DatabaseHelper.TABLE_SALES, null);
-        String[] headers = new String[] {DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_PRICE, DatabaseHelper.COLUMN_SALES_COUNT, DatabaseHelper.COLUMN_SUM};
-        userAdapter = new SimpleCursorAdapter(this,R.layout.item_sales,userCursor,headers, new int[]{R.id.Name, R.id.price, R.id.Count_sales, R.id.sum}, 0);
+        String[] headers = new String[] {DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_PRICE, DatabaseHelper.COLUMN_SALES_COUNT, DatabaseHelper.COLUMN_SUM, DatabaseHelper.COLUMN_TIME};
+        userAdapter = new SimpleCursorAdapter(this,R.layout.item_sales,userCursor,headers, new int[]{R.id.Name, R.id.price, R.id.Count_sales, R.id.sum, R.id.time}, 0);
 
         userList.setAdapter(userAdapter);
     }

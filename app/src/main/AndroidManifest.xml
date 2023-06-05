@@ -15,7 +15,7 @@
         <activity
             android:name=".activities.EditEmployeeActivity"
             android:exported="false"
-            android:screenOrientation="landscape">
+            >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -23,7 +23,7 @@
         <activity
             android:name=".activities.EmployeeActivity"
             android:exported="false"
-            android:screenOrientation="landscape" >
+             >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -31,7 +31,7 @@
         <activity
             android:name=".activities.EditProviderActivity"
             android:exported="false"
-            android:screenOrientation="landscape" >
+             >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -39,7 +39,7 @@
         <activity
             android:name=".activities.ProviderActivity"
             android:exported="false"
-            android:screenOrientation="landscape" >
+             >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -47,7 +47,9 @@
         <activity
             android:name=".activities.EditSalesActivity"
             android:exported="false"
-            android:screenOrientation="landscape" >
+            >
+            <!---->
+
 
             <!--  -->
 
@@ -58,7 +60,7 @@
         <activity
             android:name=".activities.SalesActivity"
             android:exported="false"
-            android:screenOrientation="landscape" >
+             >
 
             <!--  -->
             <meta-data
@@ -68,7 +70,7 @@
         <activity
             android:name=".activities.EditNomenclatureActivity"
             android:exported="false"
-            android:screenOrientation="landscape" >
+             >
 
             <!--  -->
             <meta-data
@@ -78,7 +80,7 @@
         <activity
             android:name=".activities.NomenclatureActivity"
             android:exported="false"
-            android:screenOrientation="landscape" >
+             >
 
             <!--  -->
             <meta-data
@@ -88,7 +90,7 @@
         <activity
             android:name=".activities.MainActivity"
             android:exported="true"
-            android:screenOrientation="landscape" >
+             >
 
             <!--  -->
             <intent-filter>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/wallpaper"
+    android:background="@drawable/wlppr"
     tools:context=".activities.NomenclatureActivity">
 
     <Button
@@ -40,4 +40,17 @@
 
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <Spinner
+        android:id="@+id/filters"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/purple_50"
+        android:contentDescription="Фильтры"
+        android:minHeight="48dp"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/Button"
+        app:layout_constraintTop_toBottomOf="@id/list" />
 </androidx.constraintlayout.widget.ConstraintLayout>

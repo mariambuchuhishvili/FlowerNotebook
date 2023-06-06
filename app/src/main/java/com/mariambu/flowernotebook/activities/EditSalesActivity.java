@@ -7,13 +7,17 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.mariambu.flowernotebook.DB.DatabaseHelper;
 import com.mariambu.flowernotebook.R;
@@ -21,13 +25,18 @@ import com.mariambu.flowernotebook.R;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class EditSalesActivity extends AppCompatActivity {
     EditText  price_input, count_input, sum_input, time_autho_input;
     Button save_btn, delete_btn, sum_btn;
     AutoCompleteTextView name_input;///////////autocomplete text = name/////////////
-    ArrayList<String> names = new ArrayList<String>();
+
+    Map<String,Integer> names = new HashMap<String,Integer>();
+    ArrayList<String> namesArray = new ArrayList<String>();
+
     SimpleCursorAdapter adapter;
     DatabaseHelper sqlHelper;
     SQLiteDatabase db;
@@ -38,26 +47,39 @@ public class EditSalesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_sales);
         name_input = findViewById(R.id.name);
+        price_input = findViewById(R.id.price);
 
         sqlHelper = new DatabaseHelper(this);
         db = sqlHelper.getWritableDatabase();
         db = sqlHelper.getReadableDatabase();
+
+
         // сделла выпадающий список из бд !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         Cursor cursor = db.query("nomenclature",null, null,null,null,null,null);
         if (cursor!=null && cursor.moveToFirst()) {
             do {
                 String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
-                names.add(name);
+                int price = cursor.getInt(cursor.getColumnIndexOrThrow("price"));
+                names.put(name,price);
+                namesArray.add(name);
             }while (cursor.moveToNext());
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,names);
+        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,namesArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        //сделла выпадающий список из бд !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! РАБОТАЕТ!!!!!!!!!!!!!!!!! позже добавлю чтоб цена выставлялась
-
         name_input.setAdapter(adapter);
-        price_input = findViewById(R.id.price);
+        //сделла выпадающий список из бд !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! РАБОТАЕТ!!!!!!!!!!!!!!!!!
+        //ДОБАВИЛА АВТОЗАПОЛНЕНИЕ НАЗВАНИЯ И ЦЕНЫЫЫЫЫЫ! я молодец =)
+        name_input.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Toast.makeText(EditSalesActivity.this, "price"+names.get(name_input.getAdapter().getItem(position)), Toast.LENGTH_SHORT).show();
+                String price = names.get(name_input.getAdapter().getItem(position)).toString();
+                price_input.setText(price);
+            }
+        });
+
+
         count_input = findViewById(R.id.count_sales);
         sum_input = findViewById(R.id.sum);
         time_autho_input = findViewById(R.id.time);
@@ -114,12 +136,14 @@ public class EditSalesActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     public void sumFunction(View view) {
         int price = Integer.parseInt(String.valueOf(price_input.getText()));
         int count = Integer.parseInt(String.valueOf(count_input.getText()));
         int sum = price*count;
         sum_input.setText(Integer.toString(sum));
     }
+
 
 
 }

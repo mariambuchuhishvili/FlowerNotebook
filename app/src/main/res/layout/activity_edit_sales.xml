@@ -30,25 +30,14 @@
         app:layout_constraintBottom_toTopOf="@id/count_sales" />
         <!--app:layout_constraintRight_toLeftOf="@id/priceButton"-->
 
-    <!--<Button
-        android:id="@+id/priceButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:onClick="priceButton"
-        android:text="Вставить цену"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@id/count_sales"
-        app:layout_constraintLeft_toRightOf="@id/price"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/name" />
-    -->
+
     <EditText
         android:id="@+id/count_sales"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Количество товара"
-        android:inputType="textPersonName"
+
         android:minHeight="48dp"
         app:layout_constraintBottom_toTopOf="@id/sum"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -92,18 +81,18 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/name"
         />
+
     <Button
         android:id="@+id/saveButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Сохранить"
         android:onClick="save"
-        app:layout_constraintHorizontal_weight="1"
+        android:text="Сохранить"
         android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/sum"
+        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/deleteButton"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/sum" />
     <Button
         android:id="@+id/deleteButton"
         android:layout_width="0dp"
@@ -116,5 +105,32 @@
         app:layout_constraintLeft_toRightOf="@+id/saveButton"
         app:layout_constraintRight_toRightOf="parent"
         />
+
+    <EditText
+        android:id="@+id/comments"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Примечание"
+        android:inputType="textMultiLine"
+        android:minHeight="48dp"
+        android:textSize="18sp"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/employeeAutoComplete" />
+
+    <AutoCompleteTextView
+        android:id="@+id/employeeAutoComplete"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Введите имя сотрудника"
+        android:minHeight="48dp"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/saveButton"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/comments"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

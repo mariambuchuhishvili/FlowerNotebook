@@ -2,6 +2,7 @@ package com.mariambu.flowernotebook.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mariambu.flowernotebook.DB.DatabaseHelper;
@@ -30,24 +32,29 @@ import java.util.List;
 import java.util.Map;
 
 public class EditSalesActivity extends AppCompatActivity {
-    EditText  price_input, count_input, sum_input, time_autho_input;
+    EditText  price_input, count_input, sum_input, time_autho_input, comments;
+
     Button save_btn, delete_btn, sum_btn;
-    AutoCompleteTextView name_input;///////////autocomplete text = name/////////////
+    AutoCompleteTextView name_input, employee_auto;///////////autocomplete text = name/////////////
 
     Map<String,Integer> names = new HashMap<String,Integer>();
     ArrayList<String> namesArray = new ArrayList<String>();
+    ArrayList<String> employeeArray = new ArrayList<String>();
 
     SimpleCursorAdapter adapter;
     DatabaseHelper sqlHelper;
     SQLiteDatabase db;
     Cursor userCursor;
     long userId=0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_sales);
         name_input = findViewById(R.id.name);
         price_input = findViewById(R.id.price);
+        employee_auto = findViewById(R.id.employeeAutoComplete);
+        comments = findViewById(R.id.comments);
 
         sqlHelper = new DatabaseHelper(this);
         db = sqlHelper.getWritableDatabase();
@@ -56,18 +63,20 @@ public class EditSalesActivity extends AppCompatActivity {
 
         // сделла выпадающий список из бд !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-        Cursor cursor = db.query("nomenclature",null, null,null,null,null,null);
-        if (cursor!=null && cursor.moveToFirst()) {
+        Cursor cursorName = db.query("nomenclature",null, null,null,null,null,null);
+        if (cursorName!=null && cursorName.moveToFirst()) {
             do {
-                String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
-                int price = cursor.getInt(cursor.getColumnIndexOrThrow("price"));
+
+                String name = cursorName.getString(cursorName.getColumnIndexOrThrow("name"));
+                int price = cursorName.getInt(cursorName.getColumnIndexOrThrow("price"));
                 names.put(name,price);
                 namesArray.add(name);
-            }while (cursor.moveToNext());
+            }while (cursorName.moveToNext());
         }
         ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,namesArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         name_input.setAdapter(adapter);
+
         //сделла выпадающий список из бд !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! РАБОТАЕТ!!!!!!!!!!!!!!!!!
         //ДОБАВИЛА АВТОЗАПОЛНЕНИЕ НАЗВАНИЯ И ЦЕНЫЫЫЫЫЫ! я молодец =)
         name_input.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -78,11 +87,24 @@ public class EditSalesActivity extends AppCompatActivity {
                 price_input.setText(price);
             }
         });
+        //ДОБАВИЛА АВТОЗАПОЛНЕНИЕ НАЗВАНИЯ И ЦЕНЫЫЫЫЫЫ! я молодец =)
+        //для авто заполнения сотрудника
+        Cursor cursorEmployee = db.query("employee",null, null,null,null,null,null);
+        if (cursorEmployee!=null && cursorEmployee.moveToFirst()) {
+            do {
+                String name = cursorEmployee.getString(cursorEmployee.getColumnIndexOrThrow("fioemployee"));
+                employeeArray.add(name);
+            }while (cursorEmployee.moveToNext());
+        }
+        ArrayAdapter<String> adapterEmployee = new ArrayAdapter(this, android.R.layout.simple_spinner_item,employeeArray);
+        adapterEmployee.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        employee_auto.setAdapter(adapterEmployee);
 
 
         count_input = findViewById(R.id.count_sales);
         sum_input = findViewById(R.id.sum);
         time_autho_input = findViewById(R.id.time);
+
         //time autho complite
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm, dd-MM-yy");
         String date = simpleDateFormat.format(Calendar.getInstance().getTime());
@@ -107,11 +129,31 @@ public class EditSalesActivity extends AppCompatActivity {
             count_input.setText(String.valueOf(userCursor.getInt(3)));
             sum_input.setText(String.valueOf(userCursor.getInt(4)));
             time_autho_input.setText(String.valueOf(userCursor.getString(5)));
+            comments.setText(String.valueOf(userCursor.getString(6)));
+            employee_auto.setText(String.valueOf(userCursor.getString(7)));
             userCursor.close();
         } else {
             // скрываем кнопку удаления
             delete_btn.setVisibility(View.GONE);
         }
+
+    }
+    public  void UpdateCount(){//пытаюсь сделать убавления товара при продаже
+        String name = name_input.getText().toString().trim();
+
+        //userCursor = db.rawQuery("select "+DatabaseHelper.COLUMN_COUNT+" from " + DatabaseHelper.TABLE_SALES + " where " +
+                //DatabaseHelper.COLUMN_ID + "=?", new String[]{String.valueOf(IDofTovar)});
+        //userCursor.moveToFirst();
+        //tv_count.setText(String.valueOf(userCursor.getInt(1)));
+        //userCursor.moveToFirst();
+        //int count = Integer.parseInt(String.valueOf(userCursor.getInt(4)));
+        //userCursor.close();
+        //int countSales = Integer.parseInt(count_input.getText().toString());
+        Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
+        //ContentValues cv = new ContentValues();//
+        //cv.put("count", Integer.parseInt(DatabaseHelper.COLUMN_COUNT) - Integer.parseInt(count_input.getText().toString()));//
+        //db.update("nomenclature", cv, " name = ? ", new String[] {name_input.getText().toString().trim()});//
+        //db.execSQL("UPDATE nomenclature SET count = " + count + " - "  + countSales + " WHERE name = " + name_input.getText().toString() +";");
     }
     public void save(View view) {
         DatabaseHelper myDB = new DatabaseHelper(EditSalesActivity.this);
@@ -119,7 +161,10 @@ public class EditSalesActivity extends AppCompatActivity {
                 Integer.valueOf(price_input.getText().toString().trim()),
                 Integer.valueOf(count_input.getText().toString().trim()),
                 Integer.valueOf(sum_input.getText().toString().trim()),
-                time_autho_input.getText().toString().trim());
+                time_autho_input.getText().toString().trim(),
+                comments.getText().toString().trim(),
+                employee_auto.getText().toString().trim());
+        //UpdateCount();
         goHome();
     }
     public void delete(View view) {

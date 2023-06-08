@@ -43,13 +43,28 @@ public class NomenclatureActivity extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(getApplicationContext());
 
         filter_spinner = findViewById(R.id.filters);
+
         ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, filters);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         filter_spinner.setAdapter(adapter);
+
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        /*db = databaseHelper.getReadableDatabase();
+        userCursor = db.rawQuery("Select * from "+DatabaseHelper.TABLE_NOMENCLATURE, null);
+        String[] headers = new String[] {DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_CATEGORY,
+                DatabaseHelper.COLUMN_PRICE, DatabaseHelper.COLUMN_COUNT};
+        userAdapter = new SimpleCursorAdapter(this,R.layout.item,userCursor,headers,
+                new int[]{R.id.name, R.id.category, R.id.price, R.id.count}, 0);
+
+        userList.setAdapter(userAdapter);*/
         AdapterView.OnItemSelectedListener onItemSelectedListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String item = (String)parent.getItemAtPosition(position);
+                //String item = (String)parent.getItemAtPosition(position);
+                String item = filter_spinner.getSelectedItem().toString();
                 switch (item) {
                     case ("Категория 'игрушки'"):
                         db = databaseHelper.getReadableDatabase();
@@ -79,7 +94,7 @@ public class NomenclatureActivity extends AppCompatActivity {
                                 new int[]{R.id.name, R.id.category, R.id.price, R.id.count}, 0);
                         userList.setAdapter(userAdapter);
                         break;
-                    default:
+                    case ("Без фильтров"):
                         db = databaseHelper.getReadableDatabase();
                         userCursor = db.rawQuery("Select * from "+DatabaseHelper.TABLE_NOMENCLATURE, null);
                         String[] headers = new String[] {DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_CATEGORY,
@@ -91,23 +106,10 @@ public class NomenclatureActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         };
         filter_spinner.setOnItemSelectedListener(onItemSelectedListener);
     }
-    /*@Override
-    public void onResume() {
-        super.onResume();
-        db = databaseHelper.getReadableDatabase();
-        userCursor = db.rawQuery("Select * from "+DatabaseHelper.TABLE_NOMENCLATURE, null);
-        String[] headers = new String[] {DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_CATEGORY,
-                DatabaseHelper.COLUMN_PRICE, DatabaseHelper.COLUMN_COUNT};
-        userAdapter = new SimpleCursorAdapter(this,R.layout.item,userCursor,headers,
-                new int[]{R.id.name, R.id.category, R.id.price, R.id.count}, 0);
-
-        userList.setAdapter(userAdapter);
-    }*/
     public void openEditNomenclatureActivity(View view){
         Intent intent = new Intent(this,EditNomenclatureActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);

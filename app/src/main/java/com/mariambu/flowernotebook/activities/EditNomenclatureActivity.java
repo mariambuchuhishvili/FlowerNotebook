@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -17,9 +18,13 @@ import android.widget.Spinner;
 import com.mariambu.flowernotebook.DB.DatabaseHelper;
 import com.mariambu.flowernotebook.R;
 
+import java.util.ArrayList;
+
 public class EditNomenclatureActivity extends AppCompatActivity {
 
     EditText name_input, category_input,price_input, count_input;
+    AutoCompleteTextView providerName;
+    ArrayList<String> namesArray = new ArrayList<String>();
     Button save_btn, delete_btn;
 
     Spinner category_spinner;
@@ -38,6 +43,11 @@ public class EditNomenclatureActivity extends AppCompatActivity {
         category_input = findViewById(R.id.category);
         price_input = findViewById(R.id.price);
         count_input = findViewById(R.id.count);
+        providerName = findViewById(R.id.providerName);
+
+        sqlHelper = new DatabaseHelper(this);
+        db = sqlHelper.getWritableDatabase();
+        db = sqlHelper.getReadableDatabase();
 
         category_spinner = findViewById(R.id.spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, categories);
@@ -60,8 +70,19 @@ public class EditNomenclatureActivity extends AppCompatActivity {
         save_btn = findViewById(R.id.saveButton);
         delete_btn = findViewById(R.id.deleteButton);
 
-        sqlHelper = new DatabaseHelper(this);
-        db = sqlHelper.getWritableDatabase();
+        Cursor cursor = db.query("provider",null, null,null,null,null,null);
+        if (cursor!=null && cursor.moveToFirst()) {
+            do {
+                String name = cursor.getString(cursor.getColumnIndexOrThrow("fioprovider"));
+                namesArray.add(name);
+            }while (cursor.moveToNext());
+        }
+        ArrayAdapter<String> adapterProvider = new ArrayAdapter(this, android.R.layout.simple_spinner_item,namesArray);
+        adapterProvider.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        providerName.setAdapter(adapterProvider);
+        //сделла выпадающий список из бд !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! РАБОТАЕТ!!!!!!!!!!!!!!!!!
+
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             userId = extras.getLong("id");
@@ -76,6 +97,7 @@ public class EditNomenclatureActivity extends AppCompatActivity {
             //category_spinner.setSelection((int) userId);
             price_input.setText(String.valueOf(userCursor.getInt(3)));
             count_input.setText(String.valueOf(userCursor.getInt(4)));
+            providerName.setText(String.valueOf(userCursor.getString(5)));
             userCursor.close();
         } else {
             // скрываем кнопку удаления
@@ -88,7 +110,8 @@ public class EditNomenclatureActivity extends AppCompatActivity {
         myDB.addNomenclature(name_input.getText().toString().trim(),
                              category_input.getText().toString().trim(),
                              Integer.valueOf(price_input.getText().toString().trim()),
-                             Integer.valueOf(count_input.getText().toString().trim()));
+                             Integer.valueOf(count_input.getText().toString().trim()),
+                             providerName.getText().toString().trim());
         goHome();
     }
     public void delete(View view) {

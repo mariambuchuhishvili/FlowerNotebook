@@ -51,7 +51,7 @@
         android:onClick="save"
         app:layout_constraintHorizontal_weight="1"
         android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/count"
+        app:layout_constraintTop_toBottomOf="@+id/providerName"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/deleteButton"
         />
@@ -63,7 +63,7 @@
         android:onClick="delete"
         app:layout_constraintHorizontal_weight="1"
         android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/count"
+        app:layout_constraintTop_toBottomOf="@+id/providerName"
         app:layout_constraintLeft_toRightOf="@+id/saveButton"
         app:layout_constraintRight_toRightOf="parent"
         />
@@ -84,8 +84,10 @@
         android:id="@+id/rub"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:textSize="18dp"
+        android:gravity="bottom"
+
         android:text="Рублей"
+        android:textSize="18dp"
         app:layout_constraintBottom_toTopOf="@id/count"
         app:layout_constraintLeft_toRightOf="@id/price"
         app:layout_constraintRight_toRightOf="parent"
@@ -99,19 +101,34 @@
         android:hint="Количество товара"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toTopOf="@id/saveButton"
+        app:layout_constraintBottom_toTopOf="@id/providerName"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/sht"
         app:layout_constraintTop_toBottomOf="@id/price" />
+
     <TextView
         android:id="@+id/sht"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:textSize="18dp"
+        android:gravity="bottom"
         android:text="Штук"
-        app:layout_constraintBottom_toTopOf="@id/deleteButton"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toTopOf="@id/providerName"
         app:layout_constraintLeft_toRightOf="@id/count"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rub" />
+        app:layout_constraintTop_toBottomOf="@id/rub"
+        app:layout_constraintVertical_bias="0.094" />
+
+    <AutoCompleteTextView
+        android:id="@+id/providerName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Введите имя поставщика"
+        android:minHeight="48dp"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/count"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/saveButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

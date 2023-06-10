@@ -33,11 +33,13 @@ import java.util.Map;
 
 public class EditSalesActivity extends AppCompatActivity {
     EditText  price_input, count_input, sum_input, time_autho_input, comments;
+    TextView countInNomenclature, countInNomenclatureDigit;
 
     Button save_btn, delete_btn, sum_btn;
     AutoCompleteTextView name_input, employee_auto;///////////autocomplete text = name/////////////
 
     Map<String,Integer> names = new HashMap<String,Integer>();
+    Map<String,Integer> namesforcount = new HashMap<String,Integer>();
     ArrayList<String> namesArray = new ArrayList<String>();
     ArrayList<String> employeeArray = new ArrayList<String>();
 
@@ -55,6 +57,8 @@ public class EditSalesActivity extends AppCompatActivity {
         price_input = findViewById(R.id.price);
         employee_auto = findViewById(R.id.employeeAutoComplete);
         comments = findViewById(R.id.comments);
+        countInNomenclature = findViewById(R.id.countInNomenclature);
+        countInNomenclatureDigit = findViewById(R.id.countInNomenclatureDigit);
 
         sqlHelper = new DatabaseHelper(this);
         db = sqlHelper.getWritableDatabase();
@@ -69,6 +73,8 @@ public class EditSalesActivity extends AppCompatActivity {
 
                 String name = cursorName.getString(cursorName.getColumnIndexOrThrow("name"));
                 int price = cursorName.getInt(cursorName.getColumnIndexOrThrow("price"));
+                int count = cursorName.getInt(cursorName.getColumnIndexOrThrow("count"));
+                namesforcount.put(name,count);
                 names.put(name,price);
                 namesArray.add(name);
             }while (cursorName.moveToNext());
@@ -84,7 +90,9 @@ public class EditSalesActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Toast.makeText(EditSalesActivity.this, "price"+names.get(name_input.getAdapter().getItem(position)), Toast.LENGTH_SHORT).show();
                 String price = names.get(name_input.getAdapter().getItem(position)).toString();
+                String count = namesforcount.get(name_input.getAdapter().getItem(position)).toString();
                 price_input.setText(price);
+                countInNomenclatureDigit.setText(count);
             }
         });
         //ДОБАВИЛА АВТОЗАПОЛНЕНИЕ НАЗВАНИЯ И ЦЕНЫЫЫЫЫЫ! я молодец =)
@@ -99,6 +107,8 @@ public class EditSalesActivity extends AppCompatActivity {
         ArrayAdapter<String> adapterEmployee = new ArrayAdapter(this, android.R.layout.simple_spinner_item,employeeArray);
         adapterEmployee.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         employee_auto.setAdapter(adapterEmployee);
+
+
 
 
         count_input = findViewById(R.id.count_sales);
@@ -157,7 +167,7 @@ public class EditSalesActivity extends AppCompatActivity {
     }
     public void save(View view) {
         DatabaseHelper myDB = new DatabaseHelper(EditSalesActivity.this);
-        myDB.addSales(name_input.getText().toString().trim(),
+       myDB.addSales(name_input.getText().toString().trim(),
                 Integer.valueOf(price_input.getText().toString().trim()),
                 Integer.valueOf(count_input.getText().toString().trim()),
                 Integer.valueOf(sum_input.getText().toString().trim()),
@@ -165,6 +175,9 @@ public class EditSalesActivity extends AppCompatActivity {
                 comments.getText().toString().trim(),
                 employee_auto.getText().toString().trim());
         //UpdateCount();
+        String[] name = new String[] {name_input.getText().toString().trim()};
+        int countNew = Integer.parseInt(countInNomenclatureDigit.getText().toString().trim()) - Integer.parseInt(count_input.getText().toString().trim());
+        myDB.updateNomenclature(countNew, name );
         goHome();
     }
     public void delete(View view) {

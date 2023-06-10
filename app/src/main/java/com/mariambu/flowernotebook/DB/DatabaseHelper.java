@@ -139,4 +139,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_PROVIDER,"_id = ?",new String[]{String.valueOf(userId)});
     }
+    public void updateNomenclature( int countNew, String[] name ){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_COUNT, countNew);
+        db.update("nomenclature", cv, COLUMN_NAME + "= ?" , name);
+    }
 }

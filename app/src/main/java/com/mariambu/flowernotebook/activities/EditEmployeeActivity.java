@@ -60,7 +60,7 @@ public class EditEmployeeActivity extends AppCompatActivity {
                         profession_input.getText().toString().trim(),
                         bday_input.getText().toString().trim(),
                         address_input.getText().toString().trim(),
-                        contacts_input.getText().toString().trim());
+                        contacts_input.getText().toString().trim(), userId);
         goHome();
     }
     public void delete(View view) {

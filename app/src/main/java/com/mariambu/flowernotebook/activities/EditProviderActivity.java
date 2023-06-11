@@ -52,7 +52,7 @@ public class EditProviderActivity extends AppCompatActivity {
     public void save(View view) {
         DatabaseHelper myDB = new DatabaseHelper(EditProviderActivity.this);
         myDB.addProvider(fio_input.getText().toString().trim(),
-                contact_input.getText().toString().trim());
+                contact_input.getText().toString().trim(), userId);
         goHome();
     }
     public void delete(View view) {

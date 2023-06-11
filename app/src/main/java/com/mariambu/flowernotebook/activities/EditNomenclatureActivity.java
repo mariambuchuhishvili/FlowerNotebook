@@ -111,7 +111,7 @@ public class EditNomenclatureActivity extends AppCompatActivity {
                              category_input.getText().toString().trim(),
                              Integer.valueOf(price_input.getText().toString().trim()),
                              Integer.valueOf(count_input.getText().toString().trim()),
-                             providerName.getText().toString().trim());
+                             providerName.getText().toString().trim(), userId);
         goHome();
     }
     public void delete(View view) {

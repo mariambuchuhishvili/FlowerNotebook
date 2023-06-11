@@ -48,6 +48,7 @@ public class EditSalesActivity extends AppCompatActivity {
     SQLiteDatabase db;
     Cursor userCursor;
     long userId=0;
+    String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +129,7 @@ public class EditSalesActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             userId = extras.getLong("id");
+            //name = extras.getString("name");
         }
         if (userId > 0) {
             // получаем элемент по id из бд
@@ -141,6 +143,13 @@ public class EditSalesActivity extends AppCompatActivity {
             time_autho_input.setText(String.valueOf(userCursor.getString(5)));
             comments.setText(String.valueOf(userCursor.getString(6)));
             employee_auto.setText(String.valueOf(userCursor.getString(7)));
+
+
+            Cursor cursorcount =  db.rawQuery("select * from " + DatabaseHelper.TABLE_NOMENCLATURE + " where " +
+                    DatabaseHelper.COLUMN_NAME + "=?", new String[]{String.valueOf(userCursor.getString(1))});
+            cursorcount.moveToFirst();
+            countInNomenclatureDigit.setText(String.valueOf(cursorcount.getInt(4)));
+            cursorcount.close();
             userCursor.close();
         } else {
             // скрываем кнопку удаления
@@ -173,7 +182,7 @@ public class EditSalesActivity extends AppCompatActivity {
                 Integer.valueOf(sum_input.getText().toString().trim()),
                 time_autho_input.getText().toString().trim(),
                 comments.getText().toString().trim(),
-                employee_auto.getText().toString().trim());
+                employee_auto.getText().toString().trim(), userId);
         //UpdateCount();
         String[] name = new String[] {name_input.getText().toString().trim()};
         int countNew = Integer.parseInt(countInNomenclatureDigit.getText().toString().trim()) - Integer.parseInt(count_input.getText().toString().trim());
@@ -183,6 +192,9 @@ public class EditSalesActivity extends AppCompatActivity {
     public void delete(View view) {
         DatabaseHelper myDB = new DatabaseHelper(EditSalesActivity.this);
         myDB.deleteSales(userId);
+        String[] name = new String[] {name_input.getText().toString().trim()};
+        int countNew = Integer.parseInt(countInNomenclatureDigit.getText().toString().trim()) + Integer.parseInt(count_input.getText().toString().trim());
+        myDB.updateNomenclature(countNew, name );
         goHome();
     }
     private void goHome(){

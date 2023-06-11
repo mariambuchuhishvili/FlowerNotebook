@@ -76,7 +76,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
     //добавление/сохранение в таблице номенклатура
-    public void addNomenclature(String name, String category, int prices, int count, String providerName){
+    public void addNomenclature(String name, String category, int prices, int count, String providerName, long userId){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_NAME,name);
@@ -84,10 +84,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_PRICE,prices);
         cv.put(COLUMN_COUNT,count);
         cv.put(COLUMN_PROVIDER_NAME, providerName);
-        db.insert(TABLE_NOMENCLATURE, null,cv);
+        if (userId>0) {
+            db.update(TABLE_NOMENCLATURE, cv, COLUMN_ID + "=" + userId,  null);
+        } else {db.insert(TABLE_NOMENCLATURE, null,cv);}
+
     }
     //добавление/сохранение в таблице продажи
-    public void addSales(String name, int prices, int sales_count, int sum, String time, String comments, String employee){
+    public void addSales(String name, int prices, int sales_count, int sum, String time, String comments, String employee, long userId){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_NAME,name);
@@ -97,10 +100,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_TIME,time);
         cv.put(COLUMN_COMMENTS, comments);
         cv.put(COLUMN_EMPLOYEE_NAME, employee);
-        db.insert(TABLE_SALES, null,cv);
+        if (userId>0) {db.update(TABLE_SALES, cv, COLUMN_ID + "=" + userId,  null);}
+        else {db.insert(TABLE_SALES, null,cv);}
+
     }
     //добавление/сохранение в таблице сотрудники
-    public void addEmployee(String fio_employee, String profession, String bday_employee, String address_employee, String contacts_employee){
+    public void addEmployee(String fio_employee, String profession, String bday_employee, String address_employee, String contacts_employee, long userId){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_EMPLOYEE_NAME,fio_employee);
@@ -108,15 +113,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_EMPLOYEE_BIRTHDAY,bday_employee);
         cv.put(COLUMN_EMPLOYEE_ADDRESS,address_employee);
         cv.put(COLUMN_EMPLOYEE_CONTACTS,contacts_employee);
-        db.insert(TABLE_EMPLOYEE, null,cv);
+        if (userId>0) {db.update(TABLE_EMPLOYEE, cv, COLUMN_ID + "="+userId, null);}
+        else {db.insert(TABLE_EMPLOYEE, null,cv);}
+
     }
     //добавление/сохранение в таблице поставщики
-    public void addProvider(String fio_provider, String provider_contacts){
+    public void addProvider(String fio_provider, String provider_contacts, long userId){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_PROVIDER_NAME,fio_provider);
         cv.put(COLUMN_PROVIDER_CONTACTS,provider_contacts);
-        db.insert(TABLE_PROVIDER, null,cv);
+        if (userId>0) {db.update(TABLE_PROVIDER, cv, COLUMN_ID + "="+userId, null);}
+        else {db.insert(TABLE_PROVIDER, null,cv);}
+
     }
 
     //удаление из таблицы номенклатура

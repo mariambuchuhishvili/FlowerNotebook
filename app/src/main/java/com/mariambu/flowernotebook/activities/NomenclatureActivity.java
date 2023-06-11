@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 
@@ -30,7 +31,6 @@ public class NomenclatureActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nomenclature);
-
         userList = findViewById(R.id.list);
         userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -41,9 +41,11 @@ public class NomenclatureActivity extends AppCompatActivity {
             }
         });
         databaseHelper = new DatabaseHelper(getApplicationContext());
-
         filter_spinner = findViewById(R.id.filters);
-
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
         ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, filters);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         filter_spinner.setAdapter(adapter);
@@ -57,38 +59,42 @@ public class NomenclatureActivity extends AppCompatActivity {
                         db = databaseHelper.getReadableDatabase();
                         userCursor = db.rawQuery("Select * from "+DatabaseHelper.TABLE_NOMENCLATURE +
                                 " where " +DatabaseHelper.COLUMN_CATEGORY+ "='Игрушки'", null);
-                        String[] headers1 = new String[] {DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_CATEGORY,
+                        /*String[] headers1 = new String[] {DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_CATEGORY,
                                 DatabaseHelper.COLUMN_PRICE, DatabaseHelper.COLUMN_COUNT};
                         userAdapter = new SimpleCursorAdapter(NomenclatureActivity.this,R.layout.item,userCursor,headers1,
                                 new int[]{R.id.name, R.id.category, R.id.price, R.id.count}, 0);
-                        userList.setAdapter(userAdapter);
+                        userList.setAdapter(userAdapter);*/
+                        FilterForNomenclature(userCursor);
                         break;
                     case ("Категория 'открытки'"):
                         db = databaseHelper.getReadableDatabase();
                         userCursor = db.rawQuery("Select * from "+DatabaseHelper.TABLE_NOMENCLATURE + " where " +DatabaseHelper.COLUMN_CATEGORY+ "='Открытки'", null);
-                        String[] headers2 = new String[] {DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_CATEGORY,
+                        /*String[] headers2 = new String[] {DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_CATEGORY,
                                 DatabaseHelper.COLUMN_PRICE, DatabaseHelper.COLUMN_COUNT};
                         userAdapter = new SimpleCursorAdapter(NomenclatureActivity.this,R.layout.item,userCursor,headers2,
                                 new int[]{R.id.name, R.id.category, R.id.price, R.id.count}, 0);
-                        userList.setAdapter(userAdapter);
+                        userList.setAdapter(userAdapter);*/
+                        FilterForNomenclature(userCursor);
                         break;
                     case ("Категория 'цветы'"):
                         db = databaseHelper.getReadableDatabase();
                         userCursor = db.rawQuery("Select * from "+DatabaseHelper.TABLE_NOMENCLATURE + " where " +DatabaseHelper.COLUMN_CATEGORY+ "='Цветы'", null);
-                        String[] headers3 = new String[] {DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_CATEGORY,
+                        /*String[] headers3 = new String[] {DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_CATEGORY,
                                 DatabaseHelper.COLUMN_PRICE, DatabaseHelper.COLUMN_COUNT};
                         userAdapter = new SimpleCursorAdapter(NomenclatureActivity.this,R.layout.item,userCursor,headers3,
                                 new int[]{R.id.name, R.id.category, R.id.price, R.id.count}, 0);
-                        userList.setAdapter(userAdapter);
+                        userList.setAdapter(userAdapter);*/
+                        FilterForNomenclature(userCursor);
                         break;
                     case ("Без фильтров"):
                         db = databaseHelper.getReadableDatabase();
                         userCursor = db.rawQuery("Select * from "+DatabaseHelper.TABLE_NOMENCLATURE, null);
-                        String[] headers = new String[] {DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_CATEGORY,
+                        /*String[] headers = new String[] {DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_CATEGORY,
                                 DatabaseHelper.COLUMN_PRICE, DatabaseHelper.COLUMN_COUNT};
                         userAdapter = new SimpleCursorAdapter(NomenclatureActivity.this,R.layout.item,userCursor,headers,
                                 new int[]{R.id.name, R.id.category, R.id.price, R.id.count}, 0);
-                        userList.setAdapter(userAdapter);
+                        userList.setAdapter(userAdapter);*/
+                        FilterForNomenclature(userCursor);
                         break;
                 }
             }
@@ -98,19 +104,14 @@ public class NomenclatureActivity extends AppCompatActivity {
         filter_spinner.setOnItemSelectedListener(onItemSelectedListener);
 
     }
-   /* @Override
-    public void onResume() {
-        super.onResume();
+    public void FilterForNomenclature(Cursor userCursor){
         db = databaseHelper.getReadableDatabase();
-        userCursor = db.rawQuery("Select * from "+DatabaseHelper.TABLE_NOMENCLATURE, null);
         String[] headers = new String[] {DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_CATEGORY,
                 DatabaseHelper.COLUMN_PRICE, DatabaseHelper.COLUMN_COUNT};
-        userAdapter = new SimpleCursorAdapter(this,R.layout.item,userCursor,headers,
+        userAdapter = new SimpleCursorAdapter(NomenclatureActivity.this,R.layout.item,userCursor,headers,
                 new int[]{R.id.name, R.id.category, R.id.price, R.id.count}, 0);
-
         userList.setAdapter(userAdapter);
-
-    }*/
+    }
     public void openEditNomenclatureActivity(View view){
         Intent intent = new Intent(this,EditNomenclatureActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);

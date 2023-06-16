@@ -28,7 +28,7 @@ public class EditNomenclatureActivity extends AppCompatActivity {
     Button save_btn, delete_btn;
 
     Spinner category_spinner;
-    String[] categories ={"Цветы","Открытки","Игрушки"};
+    String[] categories ={"Цветы","Открытки","Игрушки", "Семена", "Горшочные цветы", "Декорация"};
 
     DatabaseHelper sqlHelper;
     SQLiteDatabase db;

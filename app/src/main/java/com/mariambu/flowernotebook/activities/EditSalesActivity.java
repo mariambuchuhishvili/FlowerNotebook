@@ -68,7 +68,8 @@ public class EditSalesActivity extends AppCompatActivity {
 
         // сделла выпадающий список из бд !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-        Cursor cursorName = db.query("nomenclature",null, null,null,null,null,null);
+        Cursor cursorName = db.query("nomenclature",null, null,null,
+                                                           null,null,null);
         if (cursorName!=null && cursorName.moveToFirst()) {
             do {
 
@@ -157,23 +158,7 @@ public class EditSalesActivity extends AppCompatActivity {
         }
 
     }
-    public  void UpdateCount(){//пытаюсь сделать убавления товара при продаже
-        String name = name_input.getText().toString().trim();
 
-        //userCursor = db.rawQuery("select "+DatabaseHelper.COLUMN_COUNT+" from " + DatabaseHelper.TABLE_SALES + " where " +
-                //DatabaseHelper.COLUMN_ID + "=?", new String[]{String.valueOf(IDofTovar)});
-        //userCursor.moveToFirst();
-        //tv_count.setText(String.valueOf(userCursor.getInt(1)));
-        //userCursor.moveToFirst();
-        //int count = Integer.parseInt(String.valueOf(userCursor.getInt(4)));
-        //userCursor.close();
-        //int countSales = Integer.parseInt(count_input.getText().toString());
-        Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
-        //ContentValues cv = new ContentValues();//
-        //cv.put("count", Integer.parseInt(DatabaseHelper.COLUMN_COUNT) - Integer.parseInt(count_input.getText().toString()));//
-        //db.update("nomenclature", cv, " name = ? ", new String[] {name_input.getText().toString().trim()});//
-        //db.execSQL("UPDATE nomenclature SET count = " + count + " - "  + countSales + " WHERE name = " + name_input.getText().toString() +";");
-    }
     public void save(View view) {
         DatabaseHelper myDB = new DatabaseHelper(EditSalesActivity.this);
        myDB.addSales(name_input.getText().toString().trim(),

@@ -49,7 +49,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + TABLE_NOMENCLATURE +" ( " + COLUMN_ID
                 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_NAME
                 + " TEXT, "+ COLUMN_CATEGORY + " TEXT, "
-                + COLUMN_PRICE + " INTEGER, " + COLUMN_COUNT + " INTEGER, " + COLUMN_PROVIDER_NAME+" TEXT);");
+                + COLUMN_PRICE + " INTEGER, " + COLUMN_COUNT + " INTEGER, "
+                + COLUMN_PROVIDER_NAME+" TEXT);");
        //таблица продажи//
         db.execSQL("CREATE TABLE " + TABLE_SALES +" ( " + COLUMN_ID
                 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_NAME
@@ -76,7 +77,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
     //добавление/сохранение в таблице номенклатура
-    public void addNomenclature(String name, String category, int prices, int count, String providerName, long userId){
+    public void addNomenclature(String name, String category, int prices, int count,
+                                String providerName, long userId){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_NAME,name);

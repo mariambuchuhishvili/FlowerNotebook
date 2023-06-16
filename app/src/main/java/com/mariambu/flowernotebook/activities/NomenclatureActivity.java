@@ -20,7 +20,7 @@ import com.mariambu.flowernotebook.R;
 public class NomenclatureActivity extends AppCompatActivity {
     ListView userList;
     Spinner filter_spinner;
-    String[] filters ={"Без фильтров","Категория 'игрушки'","Категория 'открытки'","Категория 'цветы'"};
+    String[] filters ={"Без фильтров","Категория 'Игрушки'","Категория 'Открытки'","Категория 'Цветы'","Категория 'Семена'", "Категория 'Горшочные цветы'", "Категория 'Декорация'"};
 
     DatabaseHelper databaseHelper;
     SQLiteDatabase db;
@@ -55,45 +55,47 @@ public class NomenclatureActivity extends AppCompatActivity {
                 //String item = (String)parent.getItemAtPosition(position);
                 String item = filter_spinner.getSelectedItem().toString();
                 switch (item) {
-                    case ("Категория 'игрушки'"):
+                    case ("Категория 'Игрушки'"):
                         db = databaseHelper.getReadableDatabase();
                         userCursor = db.rawQuery("Select * from "+DatabaseHelper.TABLE_NOMENCLATURE +
                                 " where " +DatabaseHelper.COLUMN_CATEGORY+ "='Игрушки'", null);
-                        /*String[] headers1 = new String[] {DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_CATEGORY,
-                                DatabaseHelper.COLUMN_PRICE, DatabaseHelper.COLUMN_COUNT};
-                        userAdapter = new SimpleCursorAdapter(NomenclatureActivity.this,R.layout.item,userCursor,headers1,
-                                new int[]{R.id.name, R.id.category, R.id.price, R.id.count}, 0);
-                        userList.setAdapter(userAdapter);*/
+
                         FilterForNomenclature(userCursor);
                         break;
-                    case ("Категория 'открытки'"):
+                    case ("Категория 'Открытки'"):
                         db = databaseHelper.getReadableDatabase();
                         userCursor = db.rawQuery("Select * from "+DatabaseHelper.TABLE_NOMENCLATURE + " where " +DatabaseHelper.COLUMN_CATEGORY+ "='Открытки'", null);
-                        /*String[] headers2 = new String[] {DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_CATEGORY,
-                                DatabaseHelper.COLUMN_PRICE, DatabaseHelper.COLUMN_COUNT};
-                        userAdapter = new SimpleCursorAdapter(NomenclatureActivity.this,R.layout.item,userCursor,headers2,
-                                new int[]{R.id.name, R.id.category, R.id.price, R.id.count}, 0);
-                        userList.setAdapter(userAdapter);*/
+
                         FilterForNomenclature(userCursor);
                         break;
-                    case ("Категория 'цветы'"):
+                    case ("Категория 'Цветы'"):
                         db = databaseHelper.getReadableDatabase();
                         userCursor = db.rawQuery("Select * from "+DatabaseHelper.TABLE_NOMENCLATURE + " where " +DatabaseHelper.COLUMN_CATEGORY+ "='Цветы'", null);
-                        /*String[] headers3 = new String[] {DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_CATEGORY,
-                                DatabaseHelper.COLUMN_PRICE, DatabaseHelper.COLUMN_COUNT};
-                        userAdapter = new SimpleCursorAdapter(NomenclatureActivity.this,R.layout.item,userCursor,headers3,
-                                new int[]{R.id.name, R.id.category, R.id.price, R.id.count}, 0);
-                        userList.setAdapter(userAdapter);*/
+
                         FilterForNomenclature(userCursor);
                         break;
                     case ("Без фильтров"):
                         db = databaseHelper.getReadableDatabase();
                         userCursor = db.rawQuery("Select * from "+DatabaseHelper.TABLE_NOMENCLATURE, null);
-                        /*String[] headers = new String[] {DatabaseHelper.COLUMN_NAME, DatabaseHelper.COLUMN_CATEGORY,
-                                DatabaseHelper.COLUMN_PRICE, DatabaseHelper.COLUMN_COUNT};
-                        userAdapter = new SimpleCursorAdapter(NomenclatureActivity.this,R.layout.item,userCursor,headers,
-                                new int[]{R.id.name, R.id.category, R.id.price, R.id.count}, 0);
-                        userList.setAdapter(userAdapter);*/
+
+                        FilterForNomenclature(userCursor);
+                        break;
+                    case ("Категория 'Семена'"):
+                        db = databaseHelper.getReadableDatabase();
+                        userCursor = db.rawQuery("Select * from "+DatabaseHelper.TABLE_NOMENCLATURE + " where " +DatabaseHelper.COLUMN_CATEGORY+ "='Семена'", null);
+
+                        FilterForNomenclature(userCursor);
+                        break;
+                    case ("Категория 'Горшочные цветы'"):
+                        db = databaseHelper.getReadableDatabase();
+                        userCursor = db.rawQuery("Select * from "+DatabaseHelper.TABLE_NOMENCLATURE + " where " +DatabaseHelper.COLUMN_CATEGORY+ "='Горшочные цветы'", null);
+
+                        FilterForNomenclature(userCursor);
+                        break;
+                    case ("Категория 'Декорация'"):
+                        db = databaseHelper.getReadableDatabase();
+                        userCursor = db.rawQuery("Select * from "+DatabaseHelper.TABLE_NOMENCLATURE + " where " +DatabaseHelper.COLUMN_CATEGORY+ "='Декорация'", null);
+
                         FilterForNomenclature(userCursor);
                         break;
                 }
